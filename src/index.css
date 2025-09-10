@@ -1,0 +1,247 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Quantum AI/Cybersecurity Dark Mode */
+    --background: 222 84% 3%;
+    --foreground: 210 40% 98%;
+    
+    --card: 222 84% 3%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 222 84% 3%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 180 100% 50%;
+    --primary-foreground: 222 84% 3%;
+    
+    --secondary: 261 83% 58%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 217 32% 8%;
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 261 83% 58%;
+    --accent-foreground: 210 40% 98%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 217 32% 12%;
+    --input: 217 32% 8%;
+    --ring: 180 100% 50%;
+    
+    --radius: 0.75rem;
+    
+    /* Quantum AI/Cybersecurity theme variables */
+    --quantum-cyan: #00FFFF;
+    --quantum-purple: #8B5CF6;
+    --quantum-blue: #0EA5E9;
+    --neural-green: #00FF88;
+    --matrix-green: #39FF14;
+    --photo-glow-size: 15px;
+    --photo-transition: all 0.3s ease;
+    
+    /* Deep black backgrounds */
+    --deep-black: #000000;
+    --slate-950: #020617;
+    --slate-900: #0f172a;
+    --slate-800: #1e293b;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    scroll-behavior: smooth;
+    background: radial-gradient(ellipse at top, #0a0e27 0%, #000000 50%, #0a0014 100%);
+    min-height: 100vh;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply tracking-tight font-semibold;
+  }
+  
+  /* Advanced glassmorphism card styles */
+  .glass-card {
+    @apply bg-slate-800/30 backdrop-blur-xl border border-slate-700/30 shadow-2xl;
+    background: rgba(30, 41, 59, 0.4);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(148, 163, 184, 0.1);
+    box-shadow: 
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+  
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20;
+  }
+  
+  /* Hide scrollbar but keep functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Advanced gradient text utility */
+  .gradient-text {
+    @apply bg-gradient-to-r from-red-500 via-blue-500 to-red-600 text-transparent bg-clip-text;
+  }
+
+  /* Red-Blue text hover effects */
+  .text-hover-gradient {
+    @apply transition-all duration-300 hover:bg-gradient-to-r hover:from-red-500 hover:to-blue-500 hover:text-transparent hover:bg-clip-text;
+  }
+  
+  /* Enhanced hover effect for cards */
+  .hover-card-animation {
+    @apply transition-all duration-500 hover:shadow-2xl hover:-translate-y-2;
+    transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .hover-card-animation:hover {
+    box-shadow: 
+      0 20px 60px rgba(139, 92, 246, 0.15),
+      0 8px 32px rgba(6, 182, 212, 0.1),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+  
+  /* Profile photo styles */
+  .profile-photo-container {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .profile-photo-glow {
+    @apply absolute -inset-0.5 rounded-full opacity-75 blur-md transition-all duration-300;
+    background: linear-gradient(45deg, var(--ml-purple), var(--ml-cyan));
+  }
+  
+  .profile-photo-hover:hover .profile-photo-glow {
+    @apply opacity-100;
+    filter: blur(var(--photo-glow-size));
+  }
+}
+
+/* Quantum AI/Cybersecurity dark theme */
+body {
+  background: radial-gradient(ellipse at top, #0a0e27 0%, #000000 50%, #0a0014 100%) !important;
+  color: rgb(248 250 252) !important;
+  position: relative;
+}
+
+/* Quantum Grid Overlay */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* Form focus effects with neon glow */
+input:focus, textarea:focus {
+  box-shadow: 
+    0 0 0 2px rgba(139, 92, 246, 0.3),
+    0 0 20px rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.8);
+  transition: all 0.3s ease;
+}
+
+/* Enhanced skill bar hover effects */
+.skill-bar-glow:hover {
+  filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.8));
+  transform: translateY(-2px);
+}
+
+/* Advanced pulsing animation for interactive elements */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+    box-shadow: 0 0 0 rgba(139, 92, 246, 0.4);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 3s infinite ease-in-out;
+}
+
+/* Advanced neon button styles */
+@keyframes neon-glow {
+  0%, 100% {
+    box-shadow: 
+      0 0 5px rgba(139, 92, 246, 0.5),
+      0 0 10px rgba(139, 92, 246, 0.3),
+      0 0 15px rgba(139, 92, 246, 0.2);
+  }
+  50% {
+    box-shadow: 
+      0 0 10px rgba(139, 92, 246, 0.8),
+      0 0 20px rgba(139, 92, 246, 0.6),
+      0 0 30px rgba(139, 92, 246, 0.4);
+  }
+}
+
+.neon-button {
+  animation: neon-glow 2s infinite ease-in-out;
+}
+
+/* Enhanced scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.6), rgba(6, 182, 212, 0.6));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(139, 92, 246, 0.8), rgba(6, 182, 212, 0.8));
+}
+
+/* Selection color */
+::selection {
+  background: rgba(139, 92, 246, 0.3);
+  color: white;
+}
+
+/* Force all text to be light in dark theme */
+.container * {
+  color: inherit;
+}
+
+/* Advanced background patterns */
+.bg-pattern {
+  background-image: 
+    radial-gradient(circle at 25% 25%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+}
