@@ -91,18 +91,6 @@ export function About() {
             <div className="flex flex-col items-center justify-center mb-8">
               <ProfilePhoto />
             </div>
-
-            <h2 className="md:text-5xl font-bold gradient-text mb-4 lg:text-6xl text-3xl">FRANSI M.</h2>
-            <h3 className="md:text-3xl text-muted-foreground mb-6 text-xl">
-              Cyber Security Analyst | AI Engineer
-            </h3>
-            <p className="text-lg text-muted-foreground mb-4"> Addis Ababa, Ethiopia</p>
-
-            <p className="max-w-3xl mx-auto mb-8 text-lg text-slate-500 leading-relaxed">
-              Passionate about building secure, intelligent systems that protect and enhance our digital future. 
-              I bridge the critical gap between cybersecurity and artificial intelligence, ensuring that our 
-              technological advancement is both innovative and secure.
-            </p>
           </motion.div>
           
           {/* Expertise Areas */}
