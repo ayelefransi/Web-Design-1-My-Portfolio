@@ -117,7 +117,7 @@ const ProfileSection = () => {
       </div>
 
       {/* Right side - Text (only once, centered on mobile, left on desktop) */}
-      <div className="space-y-4 text-center md:text-left">
+      <div className="space-y-4 text-center md:text-left max-w-xl mx-auto md:mx-0">
         <h1 className="text-4xl font-bold">FRANSI M.</h1>
         <h2 className="text-xl font-semibold text-ml-cyan">
           Cyber Security Analyst | AI Engineer
