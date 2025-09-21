@@ -1,171 +1,161 @@
-import { useEffect, useRef } from "react";
-import { motion, useAnimation, useInView } from "framer-motion";
-import AnimatedText from "@/components/AnimatedText";
-import { Shield, Brain, Cpu, Lock, Network, Bot } from "lucide-react";
-import ProfilePhoto from "@/components/ProfilePhoto";
-export function About() {
-  const bioRef = useRef(null);
-  const bioInView = useInView(bioRef, {
-    once: true
-  });
+import { useState, useEffect, useRef } from "react";
+import { motion, useAnimation } from "framer-motion";
+import { useInView } from "framer-motion";
+
+const PROFILE_IMAGE = "/fransi.jpg";
+
+const ProfileSection = () => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isEnlarged, setIsEnlarged] = useState(false);
+  const photoRef = useRef(null);
+  const isInView = useInView(photoRef, { once: true, margin: "-100px" });
   const controls = useAnimation();
+
   useEffect(() => {
-    if (bioInView) {
+    if (isInView) {
       controls.start("visible");
     }
-  }, [bioInView, controls]);
-  const fadeInUpVariant = {
-    hidden: {
-      opacity: 0,
-      y: 30
-    },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: {
-        delay: i * 0.2,
-        duration: 0.6,
-        ease: "easeOut"
-      }
-    })
-  };
-  const iconVariants = {
-    hidden: {
-      opacity: 0,
-      scale: 0.8
-    },
+  }, [isInView, controls]);
+
+  const photoVariants = {
+    hidden: { opacity: 0, scale: 0.8, y: 20 },
     visible: {
       opacity: 1,
       scale: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeOut"
-      }
+      y: 0,
+      transition: { duration: 0.7, ease: "easeOut", delay: 0.2 },
     },
+  };
+
+  const glowVariants = {
+    initial: { opacity: 0.6, scale: 1 },
     hover: {
-      scale: 1.1,
-      rotate: [0, -5, 5, -5, 0],
-      transition: {
-        duration: 0.3
-      }
-    }
+      opacity: 0.8,
+      scale: 1.05,
+      transition: { duration: 0.4, ease: "easeInOut" },
+    },
   };
 
-  // Animated background blobs
-  const blobVariants = {
-    animate: {
-      x: [0, 10, -10, 0],
-      y: [0, -15, 15, 0],
-      scale: [1, 1.05, 0.95, 1],
-      rotate: [0, 5, -5, 0],
-      transition: {
-        duration: 20,
-        ease: "easeInOut",
-        repeat: Infinity,
-        repeatType: "reverse" as const
-      }
-    }
+  const floatAnimation = {
+    y: [0, -10, 0],
+    transition: {
+      duration: 6,
+      ease: "easeInOut",
+      repeat: Infinity,
+      repeatType: "mirror" as const,
+    },
   };
-  return <section id="about" className="min-h-screen py-24 relative overflow-hidden flex items-center">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-30">
-        <motion.div className="absolute top-1/4 left-1/5 w-64 h-64 rounded-full bg-gradient-to-br from-red-500/20 to-blue-600/20 blur-3xl" variants={blobVariants} animate="animate" />
-        <motion.div className="absolute bottom-1/3 right-1/4 w-80 h-80 rounded-full bg-gradient-to-br from-blue-600/20 to-purple-600/20 blur-3xl" variants={blobVariants} animate="animate" style={{
-        animationDelay: "2s"
-      }} />
-      </div>
-      
-      <div className="container relative z-10">
-        <div className="max-w-5xl mx-auto">
-          {/* Header Section */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 30
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          duration: 0.8,
-          delay: 0.2
-        }} className="text-center mb-16">
-            <div className="flex flex-col items-center justify-center mb-8">
-              <ProfilePhoto />
-            </div>
-          </motion.div>
-          
-          {/* Expertise Areas */}
-          <motion.div ref={bioRef} initial="hidden" animate={controls} className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-            {/* Cybersecurity Card */}
-            <motion.div custom={0} variants={fadeInUpVariant} className="glass-card p-8 rounded-xl border border-red-500/20 hover:border-red-500/40 transition-all duration-300" whileHover={{
-            y: -5,
-            boxShadow: "0 20px 40px -12px rgba(239, 68, 68, 0.25)"
-          }}>
-              <motion.div variants={iconVariants} whileHover="hover" className="p-4 rounded-full bg-red-500/20 w-fit mb-6">
-                <Shield className="h-8 w-8 text-red-500" />
-              </motion.div>
-              <h3 className="text-2xl font-bold mb-4 text-red-500">Cybersecurity Expertise</h3>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-center">
-                  <Lock className="h-4 w-4 mr-3 text-red-400" />
-                  Threat Analysis & Incident Response
-                </li>
-                <li className="flex items-center">
-                  <Network className="h-4 w-4 mr-3 text-red-400" />
-                  Network Security & Infrastructure Protection
-                </li>
-                <li className="flex items-center">
-                  <Shield className="h-4 w-4 mr-3 text-red-400" />
-                  Security Policy Development & Compliance
-                </li>
-                <li className="flex items-center">
-                  <Brain className="h-4 w-4 mr-3 text-red-400" />
-                  AI-Powered Security Solutions
-                </li>
-              </ul>
+
+  const enlargedPhotoOverlay = {
+    hidden: { opacity: 0, display: "none" },
+    visible: {
+      opacity: 1,
+      display: "flex",
+      transition: { duration: 0.3 },
+    },
+  };
+
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      {/* Left side - Profile Photo */}
+      <div className="flex justify-center">
+        <div className="relative" style={{ width: "500px", height: "500px" }}>
+          {/* Background glow */}
+          <motion.div
+            className="absolute inset-0 rounded-full bg-gradient-to-r from-ml-purple to-ml-cyan opacity-50 blur-3xl"
+            animate={isHovered ? "hover" : "initial"}
+            variants={glowVariants}
+            initial="initial"
+          />
+
+          {/* Inner glow */}
+          <motion.div
+            className="absolute inset-1 rounded-full bg-gradient-to-br from-ml-purple/40 via-ml-indigo/30 to-ml-cyan/40 blur-md"
+            animate={isHovered ? { scale: 1.03 } : { scale: 1 }}
+            transition={{ duration: 0.3 }}
+          />
+
+          {/* Photo container */}
+          <motion.div
+            ref={photoRef}
+            className="relative h-full w-full cursor-pointer"
+            variants={photoVariants}
+            initial="hidden"
+            animate={controls}
+            whileHover={{ scale: 1.03, rotate: 0 }}
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+            onClick={() => setIsEnlarged(!isEnlarged)}
+          >
+            <motion.div
+              animate={floatAnimation}
+              className="h-full w-full overflow-hidden rounded-full"
+            >
+              <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white/10 shadow-lg backdrop-blur-sm">
+                <img
+                  src={PROFILE_IMAGE}
+                  alt="Profile Photo"
+                  className="h-full w-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
+              </div>
             </motion.div>
 
-            {/* AI Engineering Card */}
-            <motion.div custom={1} variants={fadeInUpVariant} className="glass-card p-8 rounded-xl border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300" whileHover={{
-            y: -5,
-            boxShadow: "0 20px 40px -12px rgba(59, 130, 246, 0.25)"
-          }}>
-              <motion.div variants={iconVariants} whileHover="hover" className="p-4 rounded-full bg-blue-500/20 w-fit mb-6">
-                <Brain className="h-8 w-8 text-blue-500" />
-              </motion.div>
-              <h3 className="text-2xl font-bold mb-4 text-blue-500">AI Engineering</h3>
-              <ul className="space-y-3 text-muted-foreground">
-                <li className="flex items-center">
-                  <Cpu className="h-4 w-4 mr-3 text-blue-400" />
-                  Machine Learning Model Development
-                </li>
-                <li className="flex items-center">
-                  <Bot className="h-4 w-4 mr-3 text-blue-400" />
-                  Deep Learning & Neural Networks
-                </li>
-                <li className="flex items-center">
-                  <Brain className="h-4 w-4 mr-3 text-blue-400" />
-                  Computer Vision & NLP
-                </li>
-                <li className="flex items-center">
-                  <Shield className="h-4 w-4 mr-3 text-blue-400" />
-                  Secure AI Implementation
-                </li>
-              </ul>
-            </motion.div>
-          </motion.div>
-
-          {/* Mission Statement */}
-          <motion.div custom={2} variants={fadeInUpVariant} initial="hidden" animate={controls} className="text-center glass-card p-8 rounded-xl">
-            <h3 className="text-2xl font-bold mb-4 gradient-text">My Mission</h3>
-            <p className="text-lg text-muted-foreground leading-relaxed max-w-4xl mx-auto">
-              To develop intelligent security solutions that not only protect against current threats but anticipate 
-              future challenges. I believe the convergence of AI and cybersecurity is essential for building resilient 
-              digital infrastructure that can adapt and evolve with emerging threats while maintaining the highest 
-              standards of privacy and security.
-            </p>
+            <motion.div
+              className="absolute -inset-1 rounded-full"
+              initial={{ opacity: 0 }}
+              animate={isHovered ? { opacity: 1 } : { opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              style={{
+                background:
+                  "linear-gradient(45deg, var(--ml-purple), var(--ml-cyan))",
+                filter: "blur(2px)",
+              }}
+            />
           </motion.div>
         </div>
       </div>
-    </section>;
-}
-export default About;
+
+      {/* Right side - Text (centered on mobile, left on desktop) */}
+      <div className="space-y-4 text-center md:text-left">
+        <h1 className="text-4xl font-bold">FRANSI M.</h1>
+        <h2 className="text-xl font-semibold text-ml-cyan">
+          Cyber Security Analyst | AI Engineer
+        </h2>
+        <p className="text-gray-400">Addis Ababa, Ethiopia</p>
+        <p className="text-lg leading-relaxed text-gray-300">
+          Passionate about building secure, intelligent systems that protect and
+          enhance our digital future. I bridge the critical gap between
+          cybersecurity and artificial intelligence, ensuring that our
+          technological advancement is both innovative and secure.
+        </p>
+      </div>
+
+      {/* Enlarged overlay */}
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
+        variants={enlargedPhotoOverlay}
+        initial="hidden"
+        animate={isEnlarged ? "visible" : "hidden"}
+        onClick={() => setIsEnlarged(false)}
+      >
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="relative max-w-3xl max-h-[85vh] overflow-hidden rounded-lg"
+        >
+          <img
+            src={PROFILE_IMAGE}
+            alt="Enlarged Profile"
+            className="w-full h-full object-contain"
+          />
+          <div className="absolute inset-0 border border-white/10 rounded-lg" />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default ProfileSection;
