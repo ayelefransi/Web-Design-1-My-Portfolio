@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useAnimation, useInView } from "framer-motion";
 
 const PROFILE_IMAGE = "/fransi.jpg";
 
@@ -56,73 +55,43 @@ const ProfileSection = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-      {/* Left side - Profile Photo */}
-      <div className="flex justify-center">
-        <div className="relative" style={{ width: "500px", height: "500px" }}>
-          {/* Background glow */}
-          <motion.div
-            className="absolute inset-0 rounded-full bg-gradient-to-r from-ml-purple to-ml-cyan opacity-50 blur-3xl"
-            animate={isHovered ? "hover" : "initial"}
-            variants={glowVariants}
-            initial="initial"
-          />
+    <section className="flex flex-col md:flex-row items-center justify-center md:justify-start px-6 md:px-20 py-16 space-y-8 md:space-y-0 md:space-x-12">
+      {/* Profile Image */}
+      <div className="relative" style={{ width: "500px", height: "500px" }}>
+        <motion.div
+          className="absolute inset-0 rounded-full bg-gradient-to-r from-ml-purple to-ml-cyan opacity-50 blur-3xl"
+          animate={isHovered ? "hover" : "initial"}
+          variants={glowVariants}
+          initial="initial"
+        />
 
-          {/* Inner glow */}
-          <motion.div
-            className="absolute inset-1 rounded-full bg-gradient-to-br from-ml-purple/40 via-ml-indigo/30 to-ml-cyan/40 blur-md"
-            animate={isHovered ? { scale: 1.03 } : { scale: 1 }}
-            transition={{ duration: 0.3 }}
-          />
-
-          {/* Photo container */}
-          <motion.div
-            ref={photoRef}
-            className="relative h-full w-full cursor-pointer"
-            variants={photoVariants}
-            initial="hidden"
-            animate={controls}
-            whileHover={{ scale: 1.03, rotate: 0 }}
-            onHoverStart={() => setIsHovered(true)}
-            onHoverEnd={() => setIsHovered(false)}
-            onClick={() => setIsEnlarged(!isEnlarged)}
-          >
-            <motion.div
-              animate={floatAnimation}
-              className="h-full w-full overflow-hidden rounded-full"
-            >
-              <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white/10 shadow-lg backdrop-blur-sm">
-                <img
-                  src={PROFILE_IMAGE}
-                  alt="Profile Photo"
-                  className="h-full w-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
-              </div>
-            </motion.div>
-
-            <motion.div
-              className="absolute -inset-1 rounded-full"
-              initial={{ opacity: 0 }}
-              animate={isHovered ? { opacity: 1 } : { opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              style={{
-                background:
-                  "linear-gradient(45deg, var(--ml-purple), var(--ml-cyan))",
-                filter: "blur(2px)",
-              }}
-            />
+        <motion.div
+          ref={photoRef}
+          className="relative h-full w-full cursor-pointer"
+          variants={photoVariants}
+          initial="hidden"
+          animate={controls}
+          whileHover={{ scale: 1.03 }}
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
+          onClick={() => setIsEnlarged(true)}
+        >
+          <motion.div animate={floatAnimation} className="h-full w-full overflow-hidden rounded-full">
+            <div className="relative h-full w-full overflow-hidden rounded-full border-2 border-white/10 shadow-lg backdrop-blur-sm">
+              <img src={PROFILE_IMAGE} alt="Profile Photo" className="h-full w-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/10" />
+            </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Right side - Text */}
-      <div className="text-left space-y-4">
-        <h1 className="text-4xl font-bold">FRANSI M.</h1>
-        <h2 className="text-xl font-semibold text-ml-cyan">
+      {/* Profile Text */}
+      <div className="text-center md:text-left max-w-xl">
+        <h1 className="text-4xl md:text-5xl font-bold mb-3">FRANSI M.</h1>
+        <h2 className="text-xl md:text-2xl font-semibold text-ml-cyan mb-2">
           Cyber Security Analyst | AI Engineer
         </h2>
-        <p className="text-gray-400">Addis Ababa, Ethiopia</p>
+        <p className="text-gray-400 mb-4">Addis Ababa, Ethiopia</p>
         <p className="text-lg leading-relaxed text-gray-300">
           Passionate about building secure, intelligent systems that protect and
           enhance our digital future. I bridge the critical gap between
@@ -131,7 +100,7 @@ const ProfileSection = () => {
         </p>
       </div>
 
-      {/* Enlarged overlay */}
+      {/* Enlarged Overlay */}
       <motion.div
         className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
         variants={enlargedPhotoOverlay}
@@ -142,19 +111,14 @@ const ProfileSection = () => {
         <motion.div
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.3 }}
-          className="relative max-w-3xl max-h-[85vh] overflow-hidden rounded-lg"
+          className="relative max-w-2xl max-h-[80vh] overflow-hidden rounded-lg"
         >
-          <img
-            src={PROFILE_IMAGE}
-            alt="Enlarged Profile"
-            className="w-full h-full object-contain"
-          />
+          <img src={PROFILE_IMAGE} alt="Enlarged Profile" className="w-full h-full object-contain" />
           <div className="absolute inset-0 border border-white/10 rounded-lg" />
         </motion.div>
       </motion.div>
-    </div>
+    </section>
   );
 };
 
