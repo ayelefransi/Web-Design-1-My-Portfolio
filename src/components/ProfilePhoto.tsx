@@ -5,7 +5,7 @@ import { useInView } from "framer-motion";
 import { useRef } from "react";
 
 // Use the uploaded profile image
-const PROFILE_IMAGE = "/lovable-uploads/0ec7358f-3051-4e5c-8f03-8000cd3d9e1e.png"; 
+const PROFILE_IMAGE = "/fransi.jpg"; 
 
 const ProfilePhoto = () => {
   const [isHovered, setIsHovered] = useState(false);
