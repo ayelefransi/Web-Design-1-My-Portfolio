@@ -38,7 +38,7 @@ const ProfileSection = () => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-center">
       {/* Left side - Profile Photo */}
       <div className="flex justify-center">
         <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]">
@@ -128,3 +128,4 @@ const ProfileSection = () => {
 };
 
 export default ProfileSection;
+
