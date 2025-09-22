@@ -41,7 +41,7 @@ const ProfileSection = () => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
       {/* Left side - Profile Photo */}
       <div className="flex justify-center">
-        <div className="relative w-[500px] h-[500px]">
+        <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px]">
           {/* Outer glow */}
           <motion.div
             className="absolute inset-0 rounded-full bg-gradient-to-r from-ml-purple to-ml-cyan opacity-50 blur-3xl"
